@@ -1,0 +1,5 @@
+flask
+pandas
+smartapi-python
+pyotp
+requests
