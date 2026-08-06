@@ -1,7 +1,1 @@
-Flask==3.0.3
-pandas==2.2.2
-numpy==1.26.4
-smartapi-python
-pyotp
-requests
-gunicorn
+
