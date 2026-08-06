@@ -56,3 +56,27 @@ def generate_signal(df):
         "rsi": round(last["RSI"],2),
         "atr": round(last["ATR"],2)
     }
+    # ===== Liquidity Sweep =====
+    prev_high = df["high"].iloc[-2]
+    prev_low = df["low"].iloc[-2]
+
+    liquidity_buy = False
+    liquidity_sell = False
+
+    # Buy Side Liquidity Sweep
+    if last["high"] > prev_high and last["close"] < prev_high:
+        liquidity_sell = True
+
+    # Sell Side Liquidity Sweep
+    if last["low"] < prev_low and last["close"] > prev_low:
+        liquidity_buy = True
+
+    # ===== Break Of Structure (BOS) =====
+    bos_up = last["close"] > df["high"].iloc[-10:-1].max()
+    bos_down = last["close"] < df["low"].iloc[-10:-1].min()
+
+    if liquidity_buy and bos_up:
+        score += 2
+
+    if liquidity_sell and bos_down:
+        score -= 2
